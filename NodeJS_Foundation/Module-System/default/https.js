@@ -1,5 +1,6 @@
-const { send } = require("./request.js");
-const { read } = require("./response.js");
+// const { send } = require("./internals/request.js");
+// const { read } = require("./internals/response.js");
+const { send, read } = require("./internals");
 function makeRequire(url, data) {
   send(url, data);
   return read();
