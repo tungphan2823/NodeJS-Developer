@@ -11,7 +11,13 @@ const friends = [
 ];
 const app = express();
 const PORT = 3000;
+app.use((req, res, next) => {
+  const start = Date.now();
 
+  next();
+  const delta = Date.now() - start;
+  console.log(`${req.method} ${req.url} ${delta}ms`);
+});
 app.get("/friends", (req, res) => {
   res.json(friends);
 });
