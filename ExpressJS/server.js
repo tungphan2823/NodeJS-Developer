@@ -1,14 +1,7 @@
 const express = require("express");
-const friends = [
-  {
-    id: 0,
-    name: "Max",
-  },
-  {
-    id: 1,
-    name: "Johnn",
-  },
-];
+const friendsController = require("./controllers/friends.controller");
+const messagesController = require("./controllers/messages.controller");
+
 const app = express();
 const PORT = 3000;
 app.use((req, res, next) => {
@@ -18,25 +11,15 @@ app.use((req, res, next) => {
   const delta = Date.now() - start;
   console.log(`${req.method} ${req.url} ${delta}ms`);
 });
-app.get("/friends", (req, res) => {
-  res.json(friends);
-});
 
-app.get("/friends/:friendId", (req, res) => {
-  const friendId = +req.params.friendId;
-  const friend = friends[friendId];
-  if (friend) {
-    res.json(friend);
-  } else {
-    res.status(404).json({ error: "friend not found" });
-  }
-});
-app.get("/message", (req, res) => {
-  res.send("<ul>Heeello</ul>");
-});
-app.post("/message", (req, res) => {
-  console.log("Updating");
-});
+app.use(express.json());
+app.post("/friends", friendsController.postFriend);
+
+app.get("/friends",friendsController.getFriends);
+
+app.get("/friends/:friendId", friendsController.getFriend);
+app.get("/message", messagesController.getMessages);
+app.post("/message", messagesController.postMessages);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
