@@ -6,13 +6,13 @@ const friends = [
   },
   {
     id: 1,
-    name: "John",
+    name: "Johnn",
   },
 ];
 const app = express();
 const PORT = 3000;
 
-app.get("/", (req, res) => {
+app.get("/friends", (req, res) => {
   res.json(friends);
 });
 
