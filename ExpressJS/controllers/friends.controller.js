@@ -1,13 +1,4 @@
-const friends = [
-  {
-    id: 0,
-    name: "Max",
-  },
-  {
-    id: 1,
-    name: "Johnn",
-  },
-];
+const friends = require('../models/friends.model')
 function getFriends(req, res) {
   res.json(friends);
 }
