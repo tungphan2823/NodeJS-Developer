@@ -1,6 +1,4 @@
-
-
-
+const launches = new Map();
 
 const launch = {
   flightNumber: 100,
@@ -11,4 +9,10 @@ const launch = {
   customer: ["Tung", "NASA"],
   upcoming: true,
   success: true,
+};
+
+launches.set(launch.flightNumber, launch);
+
+module.exports = {
+  launches,
 };
