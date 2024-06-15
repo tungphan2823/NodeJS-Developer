@@ -9,3 +9,5 @@ const launchesSchema = new mongoose.Schema({
   upcoming: { type: Boolean, required: true },
   success: { type: Boolean, required: true, default: true },
 });
+// Connect schema to Mongoose
+module.exports = mongoose.model("Launch", launchesSchema);
