@@ -1,4 +1,5 @@
 const launchesDatabase = require("./launches.mongo");
+const planets = require("./planets.mongo");
 const launches = new Map();
 
 let latestFlightNumber = 100;
@@ -21,12 +22,22 @@ function existsLaunchWidthId(launchId) {
 }
 
 async function getAllLaunches() {
-  return await launchesDatabase.find({},{
-    '_id': 0, '__v': 0
-  });
+  return await launchesDatabase.find(
+    {},
+    {
+      _id: 0,
+      __v: 0,
+    }
+  );
 }
 
 async function saveLaunch(launch) {
+  const planet = await planets.findOne({
+    keplerName: launch.target,
+  });
+  if (!planet) {
+    throw new Error("Target planet not found");
+  }
   await launchesDatabase.updateOne(
     {
       flightNumber: launch.flightNumber,
