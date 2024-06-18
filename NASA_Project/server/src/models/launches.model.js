@@ -55,17 +55,28 @@ async function getLatestFlightNumber() {
   }
   return latestLaunch.flightNumber;
 }
-function addNewLaunch(launch) {
-  latestFlightNumber++;
-  launches.set(
-    latestFlightNumber,
-    Object.assign(launch, {
-      flightNumber: latestFlightNumber,
-      upcoming: true,
-      success: true,
-      customer: ["Tung", "NASA"],
-    })
-  );
+// function addNewLaunch(launch) {
+//   latestFlightNumber++;
+//   launches.set(
+//     latestFlightNumber,
+//     Object.assign(launch, {
+//       flightNumber: latestFlightNumber,
+//       upcoming: true,
+//       success: true,
+//       customer: ["Tung", "NASA"],
+//     })
+//   );
+// }
+
+async function scheduleNewLaunch(launch) {
+  const latestFlightNumber = (await getLatestFlightNumber()) + 1;
+  const newLaunch = Object.assign(launch, {
+    success: true,
+    upcoming: true,
+    flightNumber: latestFlightNumber,
+    customers: ["Tung", "NASA"],
+  });
+  await saveLaunch(newLaunch);
 }
 
 function abortLaunchById(launchId) {
@@ -77,7 +88,7 @@ function abortLaunchById(launchId) {
 
 module.exports = {
   getAllLaunches,
-  addNewLaunch,
   existsLaunchWidthId,
   abortLaunchById,
+  scheduleNewLaunch
 };
