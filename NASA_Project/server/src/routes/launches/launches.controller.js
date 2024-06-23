@@ -4,8 +4,12 @@ const {
   existsLaunchWidthId,
   abortLaunchById,
 } = require("../../models/launches.model");
+const { getPagination } = require("../../service/query");
 async function httpGetAllLaunches(req, res) {
-  return res.status(200).json(await getAllLaunches());
+  console.log(req.query);
+  const { skip, limit } = getPagination(req.query);
+ 
+  return res.status(200).json(await getAllLaunches(skip, limit));
 }
 
 async function httpAddNewLaunch(req, res) {
@@ -41,7 +45,7 @@ async function httpAbortLaunch(req, res) {
       error: "launch not found zz",
     });
   }
-  
+
   const aborted = await abortLaunchById(launchId);
   console.log(aborted);
   if (!aborted) {
