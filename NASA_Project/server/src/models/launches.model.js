@@ -1,4 +1,5 @@
 const launchesDatabase = require("./launches.mongo");
+const axios = require("axios");
 const planets = require("./planets.mongo");
 const launches = new Map();
 const DEFAULT_FLIGHT_NUMBER = 100;
@@ -16,7 +17,29 @@ const launch = {
 };
 saveLaunch(launch);
 // launches.set(launch.flightNumber, launch);
-
+async function loadLaunchData() {
+  const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
+  const response = await axios.post(SPACEX_API_URL, {
+    query: {},
+    options: {
+      populate: [
+        {
+          path: "rocket",
+          select: {
+            name: 1,
+          },
+        },
+        {
+          path: "payloads",
+          select: {
+            customers: 1,
+          },
+        },
+      ],
+    },
+  });
+  console.log("Loading");
+}
 async function existsLaunchWidthId(launchId) {
   return await launchesDatabase.findOne({
     flightNumber: launchId,
@@ -99,4 +122,5 @@ module.exports = {
   existsLaunchWidthId,
   abortLaunchById,
   scheduleNewLaunch,
+  loadLaunchData,
 };
