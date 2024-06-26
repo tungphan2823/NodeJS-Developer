@@ -57,7 +57,8 @@ app.use(passport.session());
 
 function checkLoggedIn(req, res, next) {
   //req.user
-  const isLoggedIn = true; //TODO
+  console.log(req.user);
+  const isLoggedIn = req.isAuthenticated() && req.user; //TODO
   if (!isLoggedIn) {
     return res.status(401).json({
       error: "You must log in!",
