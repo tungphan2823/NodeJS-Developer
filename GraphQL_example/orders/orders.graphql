@@ -1,5 +1,5 @@
 type Query {
-  products: [Product]
+  orders: [Order]
 }
 type Order {
   date: String!
