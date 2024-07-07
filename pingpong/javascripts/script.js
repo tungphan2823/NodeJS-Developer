@@ -93,7 +93,7 @@ function ballReset() {
   socket.emit("ballMove", {
     ballX,
     ballY,
-    score
+    score,
   });
 }
 
@@ -240,4 +240,4 @@ socket.on("ballMove", (ballData) => {
   ballX = ballData.ballX;
   ballY = ballData.ballY;
   score = ballData.score;
-})
+});
