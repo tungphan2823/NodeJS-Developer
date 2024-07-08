@@ -10,6 +10,6 @@ const io = require("socket.io")(httpServer, {
   },
 });
 const PORT = 3000;
-server.listen(PORT);
+httpServer.listen(PORT);
 sockets.listen(io);
 console.log(`listening on port ${PORT}`);
